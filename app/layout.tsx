@@ -1,8 +1,9 @@
 import "./globals.css";
+import AuthProvider from "../components/AuthProvider";
 
 export const metadata = {
   title: "Code Sleep",
-  description: "Sleep tracking and CBT-I app",
+  description: "A CBT-I based sleep improvement app",
 };
 
 export default function RootLayout({
@@ -13,13 +14,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <nav className="p-4 border-b flex gap-6 text-sm">
-          <a href="/" className="font-bold">🌙 Code Sleep</a>
-          <a href="/dashboard">🔥 Dashboard</a>
-          <a href="/sleep-diary">😴 Diary</a>
-          <a href="/relaxation">🧘 Relax</a>
-        </nav>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

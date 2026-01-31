@@ -1,22 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { getUser } from "../lib/auth";
+import { useEffect } from "react";
 
 export default function AuthGuard({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { status } = useSession();
   const router = useRouter();
 
   useEffect(() => {
-    const user = getUser();
-    if (!user) {
+    if (status === "unauthenticated") {
       router.replace("/login");
     }
-  }, []);
+  }, [status, router]);
+
+  if (status === "loading") {
+    return <p className="p-8">Loading...</p>;
+  }
 
   return <>{children}</>;
 }

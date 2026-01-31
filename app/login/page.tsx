@@ -1,44 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { login } from "../../lib/auth";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const router = useRouter();
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    login(username);
-    router.push("/dashboard");
-  }
-
   return (
     <main className="min-h-screen flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="border p-6 rounded w-80 space-y-4"
-      >
-        <h1 className="text-xl font-bold text-center">Login</h1>
-
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="w-full border p-2"
-          required
-        />
-
-        <button className="bg-black text-white w-full py-2">
-          Enter
-        </button>
-
-        <p className="text-xs text-gray-500 text-center">
-          Offline · No account required
+      <div className="border p-8 rounded text-center space-y-4">
+        <h1 className="text-2xl font-bold">Welcome to Code Sleep</h1>
+        <p className="text-sm text-gray-500">
+          Sign in to continue
         </p>
-      </form>
+
+        <button
+          onClick={() => signIn("google")}
+          className="bg-black text-white px-4 py-2 rounded"
+        >
+          Sign in with Google
+        </button>
+      </div>
     </main>
   );
 }
