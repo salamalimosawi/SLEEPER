@@ -4,13 +4,19 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getUser } from "../lib/auth";
 
-export default function Home() {
+export default function AuthGuard({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
 
   useEffect(() => {
     const user = getUser();
-    router.push(user ? "/dashboard" : "/login");
+    if (!user) {
+      router.replace("/login");
+    }
   }, []);
 
-  return null;
+  return <>{children}</>;
 }
